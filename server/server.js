@@ -11,6 +11,7 @@ const {User}      = require('./models/user');
 app.use(bodyP.json());
 app.use(bodyP.urlencoded({extended: true}));
 //app.use(mOverride("_method"));
+const port = process.env.PORT || 3000;
 //=== ROUTES ======================================
 // POST request to create post
 app.post('/posts', (req, res) => {
@@ -50,9 +51,20 @@ app.get('/posts/:id', (req, res) => {
     });
 });
 
+// DELETE request
+// app.get('/posts/:id', (req, res) => {
+//     const id = req.params.id;
+//     if(!ObjectID.isValid(id)){
+//         return res.status(404).send()
+//     }
+//     Post.findByIdAndRemove(id).then(()=>{
+//
+//     })
+// });
+
 //==================================================
-app.listen(3000, () => {
-    console.log("Server is running on port 3000...");
+app.listen(port, () => {
+    console.log(`Server is running  at port ${port}`);
 });
 
 //==================================================
