@@ -1,16 +1,21 @@
 const expect    = require('expect');
 const request   = require('supertest');
 
+const {ObjectID} = require('mongodb');
 const {app}  =require('./../server');
 const {Post} = require('./../models/post');
 
 const posts = [{
+    _id: new ObjectID(),
     title: 'First test post',
     content: 'Some text'
 }, {
+    _id: new ObjectID(),
     title: 'Second test post',
     content: 'Some text'
 }];
+
+const randomID = new ObjectID();
 
 beforeEach((done) => {
    Post.remove({}).then(() => {
@@ -73,6 +78,32 @@ describe('GET /posts', () => {
           .expect((res) => {
             expect(res.body.posts.length).toBe(2);
           })
+          .end(done);
+   });
+});
+
+describe('GET /posts/:id', () => {
+   it('should get one particular post', (done) => {
+      request(app)
+          .get(`/posts/${posts[0]._id.toHexString()}`)
+          .expect(200)
+          .expect((res)=>{
+            expect(res.body.post.title).toBe(posts[0].title);
+          })
+          .end(done);
+   });
+
+   it('should return 404 if post not found', (done) => {
+       request(app)
+           .get(`/posts/${randomID.toHexString}`)
+           .expect(404)
+           .end(done);
+   });
+
+   it('should return 404 for non-object ids', (done) => {
+      request(app)
+          .get('/posts/1234567')
+          .expect(404)
           .end(done);
    });
 });
