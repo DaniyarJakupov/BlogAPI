@@ -11,6 +11,7 @@ app.use(bodyP.json());
 app.use(bodyP.urlencoded({extended: true}));
 //app.use(mOverride("_method"));
 //=== ROUTES ======================================
+// POST request
 app.post('/posts', (req, res) => {
     const post = new Post({
         title: req.body.title,
@@ -23,6 +24,14 @@ app.post('/posts', (req, res) => {
     }, (error)=>{
         res.status(400).send(error);
     });
+});
+// GET request
+app.get('/posts', (req, res) => {
+   Post.find().then((posts) => {
+       res.send({posts});
+   }, (error)=>{
+       res.status(400).send(error);
+   });
 });
 
 //==================================================
