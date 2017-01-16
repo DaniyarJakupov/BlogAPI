@@ -1,11 +1,11 @@
-var express = require('express'),
+const express = require('express'),
     app     = express(),
     bodyP   = require('body-parser');
 
 //=================================================
-var {mongoose}  = require('./db/mongoose');
-var {Post}      = require('./models/post');
-var {User}      = require('./models/user');
+const {mongoose}  = require('./db/mongoose');
+const {Post}      = require('./models/post');
+const {User}      = require('./models/user');
 //=== App Config ==================================
 app.use(bodyP.json());
 app.use(bodyP.urlencoded({extended: true}));
@@ -16,6 +16,7 @@ app.post('/posts', (req, res) => {
         title: req.body.title,
         content: req.body.content
     });
+
     post.save().then((doc)=>{
         res.send(doc);
     }, (error)=>{

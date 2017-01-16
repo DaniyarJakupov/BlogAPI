@@ -1,7 +1,7 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
 // Post Schema
-var Post = mongoose.model('Post', {
+const Post = mongoose.model('Post', {
     title: {
         type: String,
         required: true,
