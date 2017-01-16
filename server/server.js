@@ -19,7 +19,7 @@ app.post('/posts', (req, res) => {
     });
 
     post.save().then((doc)=>{
-        console.log(JSON.stringify(doc, undefined, 2));
+        //console.log(JSON.stringify(doc, undefined, 2));
         res.send(doc);
     }, (error)=>{
         res.status(400).send(error);

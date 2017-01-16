@@ -4,14 +4,24 @@ const request   = require('supertest');
 const {app}  =require('./../server');
 const {Post} = require('./../models/post');
 
+const posts = [{
+    title: 'First test post',
+    content: 'Some text'
+}, {
+    title: 'Second test post',
+    content: 'Some text'
+}];
+
 beforeEach((done) => {
-   Post.remove({}).then(() => done());
+   Post.remove({}).then(() => {
+       return Post.insertMany(posts);
+   }).then(() => done());
 });
 
 describe('POST /posts', ()=>{
    it('should create a new post', (done)=>{
-      var title = 'test post title';
-      var content = 'test post content';
+      const title = 'test post title';
+      const content = 'test post content';
 
       request(app)
           .post('/posts')
@@ -28,9 +38,9 @@ describe('POST /posts', ()=>{
             }
 
             Post.find().then((posts)=>{
-                expect(posts.length).toBe(1);
-                expect(posts[0].title).toBe(title);
-                expect(posts[0].content).toBe(content);
+                expect(posts.length).toBe(3);
+                expect(posts[2].title).toBe(title);
+                expect(posts[2].content).toBe(content);
                 done();
             }).catch((e) => done(e));
           });
@@ -48,9 +58,21 @@ describe('POST /posts', ()=>{
               }
 
               Post.find().then((posts) => {
-                  expect(posts.length).toBe(0);
+                  expect(posts.length).toBe(2);
                   done();
               }).catch((e) => done(e));
           });
+   });
+});
+
+describe('GET /posts', () => {
+   it('should get all posts', (done) => {
+      request(app)
+          .get('/posts')
+          .expect(200)
+          .expect((res) => {
+            expect(res.body.posts.length).toBe(2);
+          })
+          .end(done);
    });
 });
