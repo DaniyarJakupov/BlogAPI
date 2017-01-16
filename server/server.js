@@ -18,6 +18,7 @@ app.post('/posts', (req, res) => {
     });
 
     post.save().then((doc)=>{
+        console.log(JSON.stringify(doc, undefined, 2));
         res.send(doc);
     }, (error)=>{
         res.status(400).send(error);
@@ -28,3 +29,6 @@ app.post('/posts', (req, res) => {
 app.listen(3000, ()=>{
     console.log("Server is running on port 3000...");
 });
+
+//==================================================
+module.exports = {app};
