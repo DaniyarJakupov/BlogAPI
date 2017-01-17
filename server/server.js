@@ -44,7 +44,7 @@ app.get('/posts/:id', (req, res) => {
     }
     Post.findById(id).then((post) => {
         if(!post){
-            res.status(404).send();
+            return res.status(404).send();
         }
         res.send({post});
     }).catch((e)=>{
@@ -52,17 +52,21 @@ app.get('/posts/:id', (req, res) => {
     });
 });
 
-// DELETE request
-// app.get('/posts/:id', (req, res) => {
-//     const id = req.params.id;
-//     if(!ObjectID.isValid(id)){
-//         return res.status(404).send()
-//     }
-//     Post.findByIdAndRemove(id).then(()=>{
-//
-//     })
-// });
-
+//DELETE request to delete one particular post
+app.delete('/posts/:id', (req, res) => {
+    const id = req.params.id;
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send()
+    }
+    Post.findByIdAndRemove(id).then((post)=>{
+        if(!post){
+            return  res.status(404).send();
+        }
+        res.status(200).send({post});
+    }).catch((e) => {
+        res.status(400).send();
+    });
+});
 //==================================================
 app.listen(port, () => {
     console.log(`Server is running  at port ${port}`);
