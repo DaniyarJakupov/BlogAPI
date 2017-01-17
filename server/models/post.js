@@ -10,7 +10,11 @@ const postSchema = new mongoose.Schema({
         trim: true
     },
     image: {
-        type: String
+        type: String,
+        required: true,
+        minlength: 1,
+        maxlength: 200,
+        trim: true
     },
     content: {
         type: String,
