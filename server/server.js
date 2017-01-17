@@ -17,7 +17,8 @@ const port = process.env.PORT || 3000;
 app.post('/posts', (req, res) => {
     const post = new Post({
         title: req.body.title,
-        content: req.body.content
+        content: req.body.content,
+        image: req.body.image
     });
 
     post.save().then((doc) => {

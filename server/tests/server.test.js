@@ -8,11 +8,11 @@ const {Post} = require('./../models/post');
 const posts = [{
     _id: new ObjectID(),
     title: 'First test post',
-    content: 'Some text'
+    content: 'Text is here'
 }, {
     _id: new ObjectID(),
     title: 'Second test post',
-    content: 'Some text'
+    content: 'Text is here'
 }];
 
 const randomID = new ObjectID();
@@ -27,6 +27,7 @@ describe('POST /posts', ()=>{
    it('should create a new post', (done)=>{
       const title = 'test post title';
       const content = 'test post content';
+      const image = 'imgur.com';
 
       request(app)
           .post('/posts')

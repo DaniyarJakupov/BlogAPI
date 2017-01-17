@@ -11,7 +11,7 @@ const postSchema = new mongoose.Schema({
     },
     image: {
         type: String,
-        required: true,
+        default: 'http://i.imgur.com/LN8Lxyu.jpg',
         minlength: 1,
         maxlength: 200,
         trim: true
@@ -28,17 +28,3 @@ const postSchema = new mongoose.Schema({
 const Post = mongoose.model("Post", postSchema);
 
 module.exports = {Post};
-
-// var newPost = new Post({
-//     title: 'New post 2',
-//     image: 'empty',
-//     content: 'This is new post 2'
-// });
-
-// newPost.save().then((doc) => {
-//     console.log("Saved post", JSON.stringify(doc, undefined, 2));
-// }, (error) => {
-//     console.log("Unable to save post")
-// });
-
-
