@@ -108,3 +108,38 @@ describe('GET /posts/:id', () => {
           .end(done);
    });
 });
+
+describe('DELETE /posts/:id', () => {
+    it('should remove a post', (done) => {
+        var hexID = posts[0]._id.toHexString();
+        request(app)
+            .delete(`/posts/${hexID}`)
+            .expect(200)
+            .expect((res) => {
+                expect(res.body.post._id).toBe(hexID)
+            })
+            .end((err, res) => {
+            if(err){
+                return done(err);
+            }
+            Post.findById(hexID).then((post)=>{
+                expect(post).toNotExist();
+                done();
+            }).catch((e) => done(e));
+            });
+    });
+
+    it('should return 404 if post not found', (done) => {
+       request(app)
+           .delete(`/posts/${randomID.toHexString}`)
+           .expect(404)
+           .end(done);
+    });
+
+    it('should return 404 if object id is invalid', (done) => {
+        request(app)
+            .delete('/posts/1234567')
+            .expect(404)
+            .end(done);
+    });
+});
