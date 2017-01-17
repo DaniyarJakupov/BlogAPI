@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // Post Schema
-const Post = mongoose.model('Post', {
+const postSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
@@ -10,8 +10,7 @@ const Post = mongoose.model('Post', {
         trim: true
     },
     image: {
-        type: String,
-        default: 'http://i.imgur.com/LN8Lxyu.jpg'
+        type: String
     },
     content: {
         type: String,
@@ -22,6 +21,7 @@ const Post = mongoose.model('Post', {
         default: Date.now
     }
 });
+const Post = mongoose.model("Post", postSchema);
 
 module.exports = {Post};
 
