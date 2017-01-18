@@ -143,3 +143,17 @@ describe('DELETE /posts/:id', () => {
             .end(done);
     });
 });
+
+describe('PATCH /posts/:id', () => {
+   it('should update the post', (done)=>{
+       const newTitle = 'First test post UPD';
+       request(app)
+           .patch(`/posts/${posts[0]._id.toHexString()}`)
+           .send({title: newTitle})
+           .expect(200)
+           .expect((res)=>{
+               expect(res.body.post.title).toBe(newTitle);
+           })
+           .end(done);
+   });
+});

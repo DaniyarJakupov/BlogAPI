@@ -68,7 +68,7 @@ app.delete('/posts/:id', (req, res) => {
     });
 });
 
-// UPDATE request to update particular post
+// UPDATE (PATCH) request to update particular post
 app.patch('/posts/:id', (req, res) => {
     const id = req.params.id;
     const body = _.pick(req.body, ['title', 'content', 'image']);
