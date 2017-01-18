@@ -33,7 +33,7 @@ app.post('/posts', (req, res) => {
 // GET request to fetch all posts
 app.get('/posts', (req, res) => {
     Post.find().then((posts) => {
-        res.send({posts});
+        res.send(posts);
     }, (error) => {
         res.status(400).send(error);
     });
