@@ -1,6 +1,7 @@
-const express = require('express'),
-    app = express(),
-    bodyP = require('body-parser');
+const express   = require('express'),
+    app         = express(),
+    bodyP       = require('body-parser'),
+    _           = require('lodash');
 
 //=================================================
 const {ObjectID} = require('mongodb');
@@ -10,7 +11,6 @@ const {User}      = require('./models/user');
 //=== App Config ==================================
 app.use(bodyP.json());
 app.use(bodyP.urlencoded({extended: true}));
-//app.use(mOverride("_method"));
 const port = process.env.PORT || 3000;
 //=== ROUTES ======================================
 // POST request to create post
@@ -66,6 +66,25 @@ app.delete('/posts/:id', (req, res) => {
     }).catch((e) => {
         res.status(400).send();
     });
+});
+
+// UPDATE request to update particular post
+app.patch('/posts/:id', (req, res) => {
+    const id = req.params.id;
+    const body = _.pick(req.body, ['title', 'content', 'image']);
+
+    if(!ObjectID.isValid(id)){
+        return res.status(404).send()
+    }
+
+    Post.findByIdAndUpdate(id, {$set: body}, {new: true}).then((post) => {
+        if(!post){
+            return res.status(404).send();
+        }
+        res.send({post});
+    }).catch((e) => {
+        res.status(400).send();
+    })
 });
 //==================================================
 app.listen(port, () => {
