@@ -1,3 +1,5 @@
+require('./confg/config');
+//================================================
 const express   = require('express'),
     app         = express(),
     bodyP       = require('body-parser'),
@@ -11,7 +13,7 @@ const {User}      = require('./models/user');
 //=== App Config ==================================
 app.use(bodyP.json());
 app.use(bodyP.urlencoded({extended: true}));
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 //=== ROUTES ======================================
 // POST request to create post
 app.post('/posts', (req, res) => {
