@@ -48,7 +48,7 @@ app.get('/posts/:id', (req, res) => {
         if(!post){
             return res.status(404).send();
         }
-        res.send({post});
+        res.send(post);
     }).catch((e)=>{
         res.status(400).send();
     });
