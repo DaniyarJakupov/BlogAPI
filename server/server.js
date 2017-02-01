@@ -12,7 +12,7 @@ const {mongoose}  = require('./db/mongoose');
 const {Post}      = require('./models/post');
 const {User}      = require('./models/user');
 //=== App Config ==================================
-app.use(cors())
+app.use(cors());
 app.use(bodyP.json());
 app.use(bodyP.urlencoded({extended: true}));
 const port = process.env.PORT;
