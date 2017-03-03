@@ -3,6 +3,7 @@ require('./config/config');
 const express   = require('express'),
    cors        = require('cors'),
    app         = express(),
+   open       = require('open'),
    bodyP    = require('body-parser'),
     _           = require('lodash');
 
@@ -92,6 +93,7 @@ app.patch('/posts/:id', (req, res) => {
 });
 //==================================================
 app.listen(port, () => {
+    open('http://localhost:' + port + '/posts');
     console.log(`Server is running  at port ${port}`);
 });
 
